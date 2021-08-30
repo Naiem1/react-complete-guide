@@ -7,30 +7,48 @@ class App extends Component {
   
   state = {
     persons: [
-      { name: 'Harry Porter', age: 100 },
-      { name: 'Tony Stark', age: 200 },
-      { name: 'Pitter Parker', age: 300 }
+      { id: 1, name: 'Harry Porter', age: 100 },
+      { id: 2, name: 'Tony Stark', age: 200 },
+      { id: 3, name: 'Pitter Parker', age: 300 }
     ],
     otherState: 'some other value',
     showPersons: false
   }
 
 
-  nameChangeHandler = (e) => {
-    this.setState({
-      persons: [
-      { name: 'Loki', age: 100 },
-      { name: e.target.value , age: 200 },
-      { name: 'Pitter Parker', age: 800 }
-        
-      ] 
-    })
+  nameChangeHandler = (e, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    console.log('personIndex>>',personIndex);
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    // const person = Object.assign({}, this.state.persons); // old method to copy object
+
+    person.name = e.target.value;
+    
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({ persons: persons });
+
   };
 
-  deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
-    persons.splice(personIndex, 1);
-    this.setState({ persons: persons });
+  deletePersonHandler = (personIndex, id) => {
+    // A good practice is to create a copy of your state array before manipulating state
+    // create a copy -> change that -> update the state
+    // const persons = this.state.persons.slice(); // copy person array 
+    const persons = [...this.state.persons]; // modern way to copy array
+    // persons.splice(personIndex, 1);
+    // this.setState({ persons: persons });
+
+    const person = persons.filter(p => p.id !== id);
+    this.setState({
+      persons: person
+    })
   };
 
   togglePersonHandler = () => {
@@ -60,8 +78,9 @@ class App extends Component {
             return <Person
               name={person.name}
               age={person.age}
-              click={() => this.deletePersonHandler(index)}
-              changed={this.nameChangeHandler}
+              click={() => this.deletePersonHandler(index, person.id)}
+              key={person.id}
+              changed={(event) => this.nameChangeHandler(event, person.id)}
             />
           })}
         </div>
