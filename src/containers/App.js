@@ -7,6 +7,11 @@ import classes from './App.module.css';
 
 class App extends Component {
   
+  constructor(props) {
+    super(props);
+    console.log('1.[App.js] constructor');
+  }
+
   state = {
     persons: [
       { id: 1, name: 'Harry Porter', age: 100 },
@@ -17,6 +22,18 @@ class App extends Component {
     showPersons: false
   }
 
+  static getDerivedStateFromProps(props, state) {
+    console.log('2.[App.js] getDerivedStateFromProps', props);
+    return state;
+  };
+
+  componentWillMount() {
+    console.log('[App.js] componentWillMount');
+  };
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount')
+  };
 
   nameChangeHandler = (e, id) => {
     const personIndex = this.state.persons.findIndex(p => {
@@ -62,6 +79,7 @@ class App extends Component {
 
 
   render() {
+    console.log('3.[App.js] render');
     // const btnClass = [classes.Button];
 
     let persons = null;
