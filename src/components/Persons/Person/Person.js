@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import './person.css';
+import classes from './person.module.css';
 
 const StyledDiv =  styled.div`
     width: 60%;
@@ -16,16 +16,16 @@ const StyledDiv =  styled.div`
 
 const Person = props => {
   return (
-    // <div className="person">
-      <StyledDiv>
+    <div className={classes.person}>
+     
         <p onClick={props.click}> I'm a {props.name} and I am {props.age} years old!</p>
         <input
           type="text"
           onChange={props.changed}
           value={props.name}
         />
-      </StyledDiv>
-    // </div>
+      
+    </div>
   );
 };
 
