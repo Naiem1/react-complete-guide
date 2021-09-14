@@ -1,21 +1,23 @@
-import styled from 'styled-components';
 import { Component } from 'react';
+import styled from 'styled-components';
 import classes from './person.module.css';
   
 
-const Person = props => {
-  console.log('[Person.js] rendering...');
-  return (
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
     <div className={classes.person}>
-        <p onClick={props.click}> I'm a {props.name} and I am {props.age} years old!</p>
+        <p onClick={this.props.click}> I'm a {this.props.name} and I am {this.props.age} years old!</p>
         <input
           type="text"
-          onChange={props.changed}
-          value={props.name}
+          onChange={this.props.changed}
+          value={this.props.name}
         />
       
     </div>
   );
+  }
 };
 
 export default Person;
